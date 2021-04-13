@@ -3,9 +3,11 @@ extends HBoxContainer
 var button = Button.new()
 var object:Object
 var info
+var pluginref
 
-func _init(obj:Object, d):
+func _init(obj:Object, d, p):
 	object = obj
+	pluginref = p
 	
 	if d is String:
 		info = {"call": d}
@@ -64,3 +66,6 @@ func _on_button_pressed():
 	
 	if info.get("print", false):
 		print(">>> %s(%s): %s" % [info.call, get_args_string(), returned])
+	
+	if info.get("update_filesystem", false):
+		pluginref.rescan_filesystem()

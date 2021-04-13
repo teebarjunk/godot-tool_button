@@ -1,5 +1,5 @@
 
-## ToolButtonPlugin for Godot - v1.0
+## ToolButtonPlugin for Godot - v1.1
 
 Add inspector buttons to any script with one function.
 
@@ -32,16 +32,17 @@ Using *Dictionary*s instead of *String*s.
 
 |key    |desc                           |default              |
 |:------|:------------------------------|:--------------------|
-|call   | Method to call                | - |
-|args   | Array of arguments to pass    | - |
-|text   | Button label                  | - |
-|tint   | Button color                  | Color.white |
-|icon   | Button icon                   | -
-|flat   | Button is flat style          | false |
-|hint   | Hint text for mouse over      | - |
+|call   | Method to call.               | - |
+|args   | Array of arguments to pass.   | - |
+|text   | Button label.                 | - |
+|tint   | Button color.                 | Color.white |
+|icon   | Button icon.                  | -
+|flat   | Button is flat style.         | false |
+|hint   | Hint text for mouse over.     | - |
 |print  | Print output of method call?  | false |
-|align  | Button alignment              | Button.ALIGN_CENTER |
+|align  | Button alignment.             | Button.ALIGN_CENTER |
 |disable| Disable button?               | false |
+|update_filesystem| Tells Godot editor to rescan file system. | false |
 
 ```gd
 var _direction:String = ""
@@ -94,3 +95,9 @@ func add_score(amount:int):
 	property_list_changed_notify() # force property list to "redraw"
 
 ```
+
+## Changes
+
+*1.1*
+
+- added tag 'update_filesystem'
