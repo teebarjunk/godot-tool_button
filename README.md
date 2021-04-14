@@ -1,5 +1,5 @@
 
-## ToolButtonPlugin for Godot - v1.1
+## ToolButtonPlugin for Godot - v1.2
 
 Add inspector buttons to any script with one function.
 
@@ -96,7 +96,31 @@ func add_score(amount:int):
 
 ```
 
+## Resource Example
+
+To get things working on a resource, the _get_tool_buttons needs to be static.
+
+```gd
+tool
+extends Resource
+class_name MyResource
+
+# STATIC
+static func _get_tool_buttons():
+    return ["my_button"]
+
+# LOCAL
+export(String) var my_name:String = ""
+
+func my_button():
+    print(my_name)
+```
+
 ## Changes
+
+*1.2*
+
+- Works on Resources now.
 
 *1.1*
 
