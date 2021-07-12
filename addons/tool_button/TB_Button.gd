@@ -65,7 +65,11 @@ func _on_button_pressed():
 		returned = object.call(info.call)
 	
 	if info.get("print", false):
-		print(">>> %s(%s): %s" % [info.call, get_args_string(), returned])
+		var a = get_args_string()
+		if a:
+			print(">> %s(%s): %s" % [info.call, a, returned])
+		else:
+			print(">> %s: %s" % [info.call, returned])
 	
 	if info.get("update_filesystem", false):
 		pluginref.rescan_filesystem()

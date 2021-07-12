@@ -1,7 +1,7 @@
 
-## ToolButtonPlugin for Godot - v1.2
+## ToolButtonPlugin for Godot - v1.3
 
-Add inspector buttons to any script with one function.
+Add editor inspector buttons to any script with ~~one function~~ **tool**.
 
 ![ReadMe](readme/preview.png "Preview")
 
@@ -9,8 +9,17 @@ Add inspector buttons to any script with one function.
 
 - Enable plugin.
 - Add **tool** to top of your script.
-- Add func **_get_tool_buttons** that returns names of functions.
+- Add func **_get_tool_buttons** to return names of functions.
+- *(NEW v1.3)* Buttons automatically added. _get_tool_buttons not needed, except for fine control.
 
+## Simpler Example (v1.3)
+```gd
+tool
+extends Node
+
+func my_function():
+    print("I was called!")
+```
 
 ## Simple Example
 
@@ -117,6 +126,10 @@ func my_button():
 ```
 
 ## Changes
+
+*1.3*
+
+- Automatic buttons. No need for _get_tool_buttons. Just add "tool" to top of script. Buttons will be at the bottom of the editor inspector.
 
 *1.2*
 
