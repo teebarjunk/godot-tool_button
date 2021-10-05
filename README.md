@@ -1,16 +1,16 @@
 
 ## ToolButtonPlugin for Godot - v1.3
 
-Add editor inspector buttons to any script with ~~one function~~ **tool**.
+Get buttons in the inspector with one line: `tool`.
 
 ![ReadMe](readme/preview.png "Preview")
 
 ## Start
 
 - Enable plugin.
-- Add **tool** to top of your script.
-- Add func **_get_tool_buttons** to return names of functions.
-- *(NEW v1.3)* Buttons automatically added. _get_tool_buttons not needed, except for fine control.
+- Add `tool` to top of your script.
+- Add func `_get_tool_buttons` to return names of functions.
+- :new: Buttons automatically added. `_get_tool_buttons` not needed, except for fine control.
 
 ## Simpler Example (v1.3)
 ```gd
@@ -70,10 +70,10 @@ func _get_tool_buttons():
 
 func go_towards(direction:String, bad_action:bool=false):
     _direction = direction
-    
+
     if bad_action:
         _score -= 10
-    
+
     return _score
 ```
 
@@ -129,7 +129,7 @@ func my_button():
 
 *1.3*
 
-- Automatic buttons. No need for _get_tool_buttons. Just add "tool" to top of script. Buttons will be at the bottom of the editor inspector.
+- Automatic. No need for `_get_tool_buttons`. Just add `tool` to top of script. Buttons will be at the bottom of the editor inspector.
 
 *1.2*
 
@@ -137,4 +137,4 @@ func my_button():
 
 *1.1*
 
-- added tag 'update_filesystem'
+- added tag `update_filesystem`
