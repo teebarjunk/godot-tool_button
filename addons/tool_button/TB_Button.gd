@@ -19,13 +19,13 @@ func _init(obj:Object, d, p):
 
 	add_child(button)
 	button.size_flags_horizontal = SIZE_EXPAND_FILL
-	button.text = _get_label()
+	button.text = get_label()
 	button.modulate = info.get("tint", Color.WHITE)
 	button.disabled = info.get("disabled", false)
 	button.button_down.connect(self._on_button_pressed)
 #	button.connect("pressed", self, "_on_button_pressed")
 
-	button.hint_tooltip = "%s(%s)" % [info.call, _get_args_string()]
+	button.hint_tooltip = "%s(%s)" % [info.call, get_args_string()]
 
 	if "hint" in info:
 		button.hint_tooltip += "\n%s" % [info.hint]
@@ -37,7 +37,7 @@ func _init(obj:Object, d, p):
 		button.expand_icon = false
 		button.set_button_icon(load(info.icon))
 
-func _get_args_string():
+func get_args_string():
 	if not "args" in info:
 		return ""
 	var args = ""
@@ -50,7 +50,7 @@ func _get_args_string():
 			args += str(a)
 	return args
 
-func _get_label():
+func get_label():
 	if "text" in info:
 		return info.text
 	return info.call.capitalize()
@@ -64,7 +64,7 @@ func _on_button_pressed():
 		returned = object.call(info.call)
 
 	if info.get("print", true):
-		var a = _get_args_string()
+		var a = get_args_string()
 		if a:
 			print(">> %s(%s): %s" % [info.call, a, returned])
 		else:
