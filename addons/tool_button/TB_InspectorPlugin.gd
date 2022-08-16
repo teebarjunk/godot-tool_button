@@ -3,24 +3,22 @@ extends EditorInspectorPlugin
 var InspectorToolButton = preload("res://addons/tool_button/TB_Button.gd")
 var pluginref
 
-var _object:Object
-var _cache_methods:Dictionary = {}
-var _cache_selected:Dictionary = {}
+var cache_methods:Dictionary = {}
+var cache_selected:Dictionary = {}
 
 func _init(p):
 	pluginref = p
 
 func _can_handle(object):
-	_object = object
-	_cache_methods[object] = _collect_methods(object)
-	return _cache_methods[object] or object.has_method("_get_tool_buttons")
+	cache_methods[object] = _collect_methods(object)
+	return cache_methods[object] or object.has_method("_get_tool_buttons")
 
 # buttons at bottom of inspector
 func _parse_category(object, category):
 	match category:
 		"Node", "Resource":
-			if _cache_methods[object]:
-				for method in _cache_methods[object]:
+			if cache_methods[object]:
+				for method in cache_methods[object]:
 					add_custom_control(InspectorToolButton.new(object, {
 						tint=Color.GREEN_YELLOW,
 						call=method,
@@ -29,17 +27,17 @@ func _parse_category(object, category):
 					}, pluginref))
 
 # buttons defined in _get_tool_buttons show at the top
-func _parse_begin(_object):
-	if _object.has_method("_get_tool_buttons"):
+func _parse_begin(object):
+	if object.has_method("_get_tool_buttons"):
 		var methods
-		if _object is Resource:
-			methods = _object.get_script()._get_tool_buttons()
+		if object is Resource:
+			methods = object.get_script()._get_tool_buttons()
 		else:
-			methods = _object._get_tool_buttons()
+			methods = object._get_tool_buttons()
 
 		if methods:
 			for method in methods:
-				add_custom_control(InspectorToolButton.new(_object, method, pluginref))
+				add_custom_control(InspectorToolButton.new(object, method, pluginref))
 
 func _allow_method(name:String) -> bool:
 	return not name.begins_with("_")\
@@ -64,7 +62,7 @@ func _collect_methods(object:Object) -> Array:
 	var methods = []
 	for m in object.get_method_list():
 		if not m.name in default_methods:
-			if _allow_method(m.name):
+			if _allow_method(m.name) and len(m.args) == len(m.default_args):
 				methods.append(m.name)
 
 	return methods
