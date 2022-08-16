@@ -14,10 +14,18 @@ func _can_handle(object):
 	return cache_methods[object] or object.has_method("_get_tool_buttons")
 
 # buttons at bottom of inspector
+var object_category_cache = []
 func _parse_category(object, category):
-	match category:
-		"Node", "Resource":
-			if cache_methods[object]:
+	var obj_script = object.get_script()
+	var has_exports = "@export" in obj_script.source_code
+	var attached_script_category = ""
+	if obj_script and has_exports:
+		attached_script_category = obj_script.resource_path.get_file()
+		object_category_cache.append(attached_script_category)
+
+	if not attached_script_category.is_empty() \
+		and category == attached_script_category :
+		if cache_methods[object]:
 				for method in cache_methods[object]:
 					add_custom_control(InspectorToolButton.new(object, {
 						tint=Color.GREEN_YELLOW,
@@ -25,10 +33,23 @@ func _parse_category(object, category):
 						print=true,
 						update_filesystem=true
 					}, pluginref))
+	elif attached_script_category not in object_category_cache:
+		prints(category, attached_script_category)
+		match category:
+			"Node", "Resource":
+				if cache_methods[object]:
+					for method in cache_methods[object]:
+						add_custom_control(InspectorToolButton.new(object, {
+							tint=Color.GREEN_YELLOW,
+							call=method,
+							print=true,
+							update_filesystem=true
+						}, pluginref))
 
 # buttons defined in _get_tool_buttons show at the top
 func _parse_begin(object):
 	if object.has_method("_get_tool_buttons"):
+
 		var methods
 		if object is Resource:
 			methods = object.get_script()._get_tool_buttons()
