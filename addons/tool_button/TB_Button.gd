@@ -31,7 +31,7 @@ func _init(obj:Object, d, p):
 		button.hint_tooltip += "\n%s" % [info.hint]
 
 	button.flat = info.get("flat", false)
-	button.align  = info.get("align", Button.ALIGN_CENTER)
+	button.alignment  = info.get("align", HORIZONTAL_ALIGNMENT_CENTER)
 
 	if "icon" in info:
 		button.expand_icon = false
